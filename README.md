@@ -1,5 +1,7 @@
 # trmnl-marvel-comic-tracker
 
+![Screenshot](docs/fullscreen_preview.png)
+
 A Plugin for the TRMNL device that tracks Marvel Comic series by using the official Marvel Comics API
 
 ## Setup For Use
