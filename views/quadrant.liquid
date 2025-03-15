@@ -1,0 +1,20 @@
+<div class="layout">
+    {% unless noComics %}
+    <div class="flex flex--col">
+        <div class="title">
+            {{title}}
+        </div>
+        <div class="release-date">
+            {{onSaleDate}}
+        </div>
+    </div>
+    {% else %}
+    <span class="title">No Comics Found!</span>
+    {% endunless %}
+</div>
+
+<div class="title_bar">
+    <img class="image" src="/images/plugins/trmnl--render.svg" />
+    <span class="title">Marvel Comics</span>
+    <span class="instance">Out This Week</span>
+  </div>
