@@ -5,17 +5,32 @@ dayjs.extend(LocalizedFormat);
 const express = require("express");
 const app = express();
 const fs = require("fs");
-let series = require("./series.json");
+//let series = require("./series.json");
 const { cp } = require("node:fs");
 require("dotenv").config();
 
-const pubKey = process.env.MARVEL_PUB_KEY;
-const privKey = process.env.MARVEL_PRIV_KEY;
+// const pubKey = process.env.MARVEL_PUB_KEY;
+// const privKey = process.env.MARVEL_PRIV_KEY;
 
 var comicIdx = 0;
 
-app.get("/data", (req, res) => {
-  getSeriesArray().then((comics) => {
+app.use(express.json()); // Middleware to parse JSON bodies
+
+app.post("/data", (req, res) => {
+  const { pubKey, privKey } = req.query; // Extract query parameters
+  const series = req.body; // Extract JSON body
+
+  if (!pubKey || !privKey || !series) {
+    console.log(pubKey, privKey, series);
+    return res
+      .status(400)
+      .json({ error: "Missing required parameters or body" });
+  }
+
+  console.log("pubKey:", pubKey);
+  console.log("privKey:", privKey);
+  console.log("Body:", series);
+  getSeriesArray(series).then((comics) => {
     if (comics.length > 0 && comics[comicIdx] != null) {
       var idxToSend = comicIdx;
       comicIdx = (comicIdx + 1) % comics.length;
@@ -33,29 +48,36 @@ app.listen(3000, () => {
 /**
  *
  * @param {Number} id - Series ID
- * @param {String} name - Series Name
  * @param {String} dateDescriptor - Time window for comics, can be "lastWeek", "thisWeek", "nextWeek", or "thisMonth""
+ * @param {String} pubKey - Public key for Marvel API
+ * @param {String} privKey - Private key for Marvel API
  * @returns the listing of comics if any, null otherwise
  */
-async function getComics(id, name, dateDescriptor) {
+async function getComics(id, dateDescriptor, pubKey, privKey) {
   const ts = dayjs().unix().toString();
   const hash = crypto.hash("md5", ts + privKey + pubKey);
 
+  console.log(pubKey);
   const resp = await fetch(
     `https://gateway.marvel.com/v1/public/series/${id}/comics?ts=${ts}&apikey=${pubKey}&hash=${hash}&dateDescriptor=${dateDescriptor}`
   ).then((resp) => resp.json());
+  console.log(resp);
+  if (resp.code !== 200) {
+    console.error("Error fetching comics for series: " + id);
+    return null;
+  }
   if (resp.data.count > 0) {
     return resp.data.results[0];
   } else {
-    console.error("No results this week for series: " + name);
+    console.error("No results this week for series: " + id);
     return null;
   }
 }
 
-async function getSeriesArray() {
+async function getSeriesArray(series, pubKey, privKey) {
   var comics = [];
   for (const s of series) {
-    const comic = await getComics(s.id, s.name, "thisWeek");
+    const comic = await getComics(s.id, "thisWeek", pubKey, privKey);
     if (comic != null) {
       comic.onSaleDate = dayjs(
         comic.dates.find((date) => date.type === "onsaleDate").date

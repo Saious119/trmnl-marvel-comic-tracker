@@ -1,0 +1,31 @@
+---
+strategy: polling
+no_screen_padding: "no"
+dark_mode: "no"
+static_data: ""
+polling_verb: post
+polling_url: "https://trmnl-marvel-comic-tracker.onrender.com/data?pubKey={{public_key}}&privKey={{private_key}}"
+polling_headers: ""
+polling_body: "{{series}}"
+custom_fields:
+  - keyname: public_key
+    field_type: string
+    name: Public API Key
+    description:
+      Your Marvel Developer Public API Key - Get your api keys <a href="https://developer.marvel.com/"
+      class="underline" target="_blank">here</a>."
+    placeholder: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  - keyname: private_key
+    field_type: string
+    name: Private API Key
+    description:
+      Your Marvel Developer Private API Key - Get your api keys <a href="https://developer.marvel.com/"
+      class="underline" target="_blank">here</a>."
+    placeholder: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  - keyname: series
+    field_type: textarea
+    name: Series Custom JSON Body
+    description: Define the JSON body to send with the polling request, a list of series IDs that you can get from the comic series page (https://www.marvel.com/comics/series/32870/venom_2021_present).
+    placeholder: '[{"id": "32870"}, {"id": "116194"}]'
+name: Marvel Comic Tracker
+refresh_interval: 15
