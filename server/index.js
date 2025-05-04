@@ -7,6 +7,7 @@ const app = express();
 const fs = require("fs");
 //let series = require("./series.json");
 const { cp } = require("node:fs");
+const { Console } = require("node:console");
 require("dotenv").config();
 
 // const pubKey = process.env.MARVEL_PUB_KEY;
@@ -21,6 +22,10 @@ app.post("/data", (req, res) => {
   const series = req.body; // Extract JSON body
 
   if (!pubKey || !privKey || !series) {
+    Console.log("Missing required parameters or body");
+    Console.log("pubKey:", pubKey);
+    Console.log("privKey:", privKey);
+    Console.log("Body:", series);
     console.log(pubKey, privKey, series);
     return res
       .status(400)
