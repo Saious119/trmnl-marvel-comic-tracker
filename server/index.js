@@ -35,7 +35,7 @@ app.post("/data", (req, res) => {
   console.log("pubKey:", pubKey);
   console.log("privKey:", privKey);
   console.log("Body:", series);
-  getSeriesArray(series).then((comics) => {
+  getSeriesArray(series, pubKey, privKey).then((comics) => {
     if (comics.length > 0 && comics[comicIdx] != null) {
       var idxToSend = comicIdx;
       comicIdx = (comicIdx + 1) % comics.length;
@@ -62,11 +62,9 @@ async function getComics(id, dateDescriptor, pubKey, privKey) {
   const ts = dayjs().unix().toString();
   const hash = crypto.hash("md5", ts + privKey + pubKey);
 
-  console.log(pubKey);
   const resp = await fetch(
     `https://gateway.marvel.com/v1/public/series/${id}/comics?ts=${ts}&apikey=${pubKey}&hash=${hash}&dateDescriptor=${dateDescriptor}`
   ).then((resp) => resp.json());
-  console.log(resp);
   if (resp.code !== 200) {
     console.error("Error fetching comics for series: " + id);
     return null;
