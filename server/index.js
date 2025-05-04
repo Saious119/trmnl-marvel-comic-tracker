@@ -19,6 +19,7 @@ app.use(express.json()); // Middleware to parse JSON bodies
 
 app.post("/data", (req, res) => {
   const { pubKey, privKey, seriesString } = req.query; // Extract query parameters
+  console.log("seriesString:", seriesString);
   const series = seriesString.split(","); // Extract into array of series IDs
 
   if (!pubKey || !privKey || !series) {
