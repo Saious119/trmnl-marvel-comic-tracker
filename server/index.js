@@ -30,7 +30,7 @@ app.post("/data", (req, res) => {
   console.log("pubKey:", pubKey);
   console.log("privKey:", privKey);
   console.log("Body:", series);
-  getSeriesArray(series).then((comics) => {
+  getSeriesArray(series, pubKey, privKey).then((comics) => {
     if (comics.length > 0 && comics[comicIdx] != null) {
       var idxToSend = comicIdx;
       comicIdx = (comicIdx + 1) % comics.length;
