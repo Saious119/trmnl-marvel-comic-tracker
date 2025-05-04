@@ -58,6 +58,7 @@ async function getComics(id, dateDescriptor, pubKey, privKey) {
   if (resp.data.count > 0) {
     return resp.data.results[0];
   } else {
+    console.log("No comics found for series: " + id);
     return null;
   }
 }
