@@ -4,7 +4,7 @@ no_screen_padding: "no"
 dark_mode: "no"
 static_data: ""
 polling_verb: post
-polling_url: "https://trmnl-marvel-comic-tracker.onrender.com/data?pubKey={{public_key}}&privKey={{private_key}}"
+polling_url: "https://trmnl-marvel-comic-tracker.onrender.com/data?pubKey={{public_key}}&privKey={{private_key}}&seriesString={{seriesString}}"
 polling_headers: ""
 polling_body: "{{series}}"
 custom_fields:
@@ -22,7 +22,7 @@ custom_fields:
       Your Marvel Developer Private API Key - Get your api keys <a href="https://developer.marvel.com/"
       class="underline" target="_blank">here</a>."
     placeholder: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  - keyname: series
+  - keyname: seriesString
     field_type: string
     name: Series Custom JSON Body
     description: A list of series IDs that you can get from the comic series page (https://www.marvel.com/comics/series/32870/venom_2021_present). Make a comma separated list of series IDs with no spaces.

@@ -4,14 +4,7 @@ const LocalizedFormat = require("dayjs/plugin/localizedFormat");
 dayjs.extend(LocalizedFormat);
 const express = require("express");
 const app = express();
-const fs = require("fs");
-//let series = require("./series.json");
-const { cp } = require("node:fs");
 const { Console } = require("node:console");
-require("dotenv").config();
-
-// const pubKey = process.env.MARVEL_PUB_KEY;
-// const privKey = process.env.MARVEL_PRIV_KEY;
 
 var comicIdx = 0;
 
@@ -19,23 +12,15 @@ app.use(express.json()); // Middleware to parse JSON bodies
 
 app.post("/data", (req, res) => {
   const { pubKey, privKey, seriesString } = req.query; // Extract query parameters
-  console.log("seriesString:", seriesString);
   const series = seriesString.split(","); // Extract into array of series IDs
 
   if (!pubKey || !privKey || !series) {
     Console.log("Missing required parameters or body");
-    Console.log("pubKey:", pubKey);
-    Console.log("privKey:", privKey);
-    Console.log("series:", series);
-    console.log(pubKey, privKey, series);
     return res
       .status(400)
       .json({ error: "Missing required parameters or body" });
   }
 
-  console.log("pubKey:", pubKey);
-  console.log("privKey:", privKey);
-  console.log("Body:", series);
   getSeriesArray(series, pubKey, privKey).then((comics) => {
     if (comics.length > 0 && comics[comicIdx] != null) {
       var idxToSend = comicIdx;
@@ -73,7 +58,6 @@ async function getComics(id, dateDescriptor, pubKey, privKey) {
   if (resp.data.count > 0) {
     return resp.data.results[0];
   } else {
-    console.error("No results this week for series: " + id);
     return null;
   }
 }
