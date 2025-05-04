@@ -23,9 +23,9 @@ custom_fields:
       class="underline" target="_blank">here</a>."
     placeholder: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   - keyname: series
-    field_type: textarea
+    field_type: string
     name: Series Custom JSON Body
-    description: Define the JSON body to send with the polling request, a list of series IDs that you can get from the comic series page (https://www.marvel.com/comics/series/32870/venom_2021_present).
-    placeholder: '[{"id": "32870"}, {"id": "116194"}]'
+    description: A list of series IDs that you can get from the comic series page (https://www.marvel.com/comics/series/32870/venom_2021_present). Make a comma separated list of series IDs with no spaces.
+    placeholder: 32870,116194
 name: Marvel Comic Tracker
 refresh_interval: 15

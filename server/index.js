@@ -18,14 +18,14 @@ var comicIdx = 0;
 app.use(express.json()); // Middleware to parse JSON bodies
 
 app.post("/data", (req, res) => {
-  const { pubKey, privKey } = req.query; // Extract query parameters
-  const series = req.body; // Extract JSON body
+  const { pubKey, privKey, seriesString } = req.query; // Extract query parameters
+  const series = seriesString.split(","); // Extract into array of series IDs
 
   if (!pubKey || !privKey || !series) {
     Console.log("Missing required parameters or body");
     Console.log("pubKey:", pubKey);
     Console.log("privKey:", privKey);
-    Console.log("Body:", series);
+    Console.log("series:", series);
     console.log(pubKey, privKey, series);
     return res
       .status(400)
@@ -80,7 +80,7 @@ async function getComics(id, dateDescriptor, pubKey, privKey) {
 async function getSeriesArray(series, pubKey, privKey) {
   var comics = [];
   for (const s of series) {
-    const comic = await getComics(s.id, "thisWeek", pubKey, privKey);
+    const comic = await getComics(s, "thisWeek", pubKey, privKey);
     if (comic != null) {
       comic.onSaleDate = dayjs(
         comic.dates.find((date) => date.type === "onsaleDate").date
