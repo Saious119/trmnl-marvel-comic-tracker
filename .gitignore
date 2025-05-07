@@ -4,3 +4,4 @@ server/node_modules/
 server/dist/
 server/.env
 server/series.json
+server/comicIdx.txt
