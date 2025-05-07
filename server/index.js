@@ -25,6 +25,7 @@ app.post("/data", (req, res) => {
     if (comics.length > 0 && comics[comicIdx] != null) {
       var idxToSend = comicIdx;
       comicIdx = (comicIdx + 1) % comics.length;
+      console.log("Comic index: " + comicIdx);
       res.json(comics[idxToSend]);
     } else {
       res.json({ noComics: true });
