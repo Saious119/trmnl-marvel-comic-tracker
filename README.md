@@ -8,22 +8,13 @@ A Plugin for the TRMNL device that tracks Marvel Comic series by using the offic
 
 ### In `server/`
 
-Create a .env file and add the following fields
+This application has one POST endpoint `/data` that takes 3 inputs
 
-- `MARVEL_PUB_KEY`: Public key from Marvel API dashboard
-- `MARVEL_PRIV_KEY`: Private key from Marvel API dashboard
+- `pubKey`: Public key from Marvel API dashboard
+- `privKey`: Private key from Marvel API dashboard
+- `series`: A comma deliminated list of series IDs (ex: 38806,38809,38865)
 
-Also, create a file at `server/series.json` file that will list the IDs for each series. If you go to a series from this page: https://www.marvel.com/comics/series, the series ID will be in the URL.
-
-For example:
-
-```json
-[
-  { "id": 38806, "name": "Ultimate Black Panther (2024)" },
-  { "id": 38809, "name": "Ultimate Spider-Man (2024)" },
-  { "id": 38865, "name": "Ultimates (2024)" }
-]
-```
+If you go to a series from this page: https://www.marvel.com/comics/series, the series ID will be in the URL.
 
 Finally run `npm install`, and `node index.js`
 
@@ -36,3 +27,8 @@ Finally run `npm install`, and `node index.js`
 gem install trmnl_preview
 trmnlp serve
 ```
+
+## What If I Want To Remove A Series?
+
+What if you want to remove a series but dont remember which ID goes to what series?
+Well never fear I built a small API [HERE!](https://github.com/Saious119/marvel-series-id-translator)

@@ -83,6 +83,13 @@ async function getComics(id, dateDescriptor, pubKey, privKey) {
   }
 }
 
+/**
+ *
+ * @param {Number} series - List of series IDs
+ * @param {String} pubKey - Public key for Marvel API
+ * @param {String} privKey - Private key for Marvel API
+ * @returns the listing of comics if any, null otherwise
+ */
 async function getSeriesArray(series, pubKey, privKey) {
   console.log("Fetching comics for series: " + series.join(", "));
 
